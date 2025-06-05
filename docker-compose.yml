@@ -3,7 +3,7 @@ version: '3.8'
 services:
   postgres:
     image: postgres:15
-    container_name: postgres
+    container_name: postgres_hackathon
     environment:
       POSTGRES_USER: app_user
       POSTGRES_PASSWORD: secretpass
