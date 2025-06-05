@@ -31,6 +31,7 @@ jobs:
           SERVER_USER: ${{ secrets.SERVER_USER }}
         run: |
           cat > .env <<EOL
+          DB_HOST=...
           EOL
           ssh $SERVER_USER@$SERVER_IP << 'EOF'
             # Установка зависимостей (если их нет)
