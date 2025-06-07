@@ -1,6 +1,7 @@
 package ru.demyan.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.demyan.domain.Item;
@@ -34,7 +35,7 @@ public class CategoryController {
     @Autowired
     private ProductLinkRepository productLinkRepository;
 
-    @GetMapping("/categories")
+    @GetMapping(path = "/categories", produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
     public ResponseEntity<List<CategoryDto>> getProducts(@RequestParam String sex) {
         List<Long> ids = itemSexRepository.getIdsBySex(sex);
         var items = itemRepository.findItemByIds(ids);
