@@ -7,7 +7,4 @@
     <include file="migrations/init-tables.xml" relativeToChangelogFile="true"/>
     <include file="migrations/fill-tables.xml" relativeToChangelogFile="true"/>
     <include file="migrations/user-image-table.xml" relativeToChangelogFile="true"/>
-    <!--<include file="migrations/change-data-type-user-image.xml" relativeToChangelogFile="true"/>-->
-    <include file="migrations/delete-user-image-table.xml" relativeToChangelogFile="true"/>
-    <include file="migrations/create-user-image-table.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
