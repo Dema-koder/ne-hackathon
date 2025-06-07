@@ -1,0 +1,13 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="change-image-data-type-to-bytea" author="Demyan Zverev">
+        <modifyDataType
+                tableName="user_images"
+                columnName="image_data"
+                newDataType="BYTEA"/>
+    </changeSet>
+</databaseChangeLog>
