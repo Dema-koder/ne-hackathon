@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <!-- Добавляем категории -->
+    <changeSet id="data-1" author="Demyan Zverev">
+        <insert tableName="categories">
+            <column name="name" value="Платья"/>
+        </insert>
+        <insert tableName="categories">
+            <column name="name" value="Футболки"/>
+        </insert>
+        <insert tableName="categories">
+            <column name="name" value="Джинсы"/>
+        </insert>
+    </changeSet>
+
+    <!-- Добавляем товары -->
+    <changeSet id="data-2" author="Demyan Zverev">
+        <!-- Платья -->
+        <insert tableName="items">
+            <column name="category_id" value="1"/>
+        </insert>
+        <insert tableName="items">
+            <column name="category_id" value="1"/>
+        </insert>
+
+        <!-- Футболки -->
+        <insert tableName="items">
+            <column name="category_id" value="2"/>
+        </insert>
+        <insert tableName="items">
+            <column name="category_id" value="2"/>
+        </insert>
+
+        <!-- Джинсы -->
+        <insert tableName="items">
+            <column name="category_id" value="3"/>
+        </insert>
+    </changeSet>
+
+    <!-- Указываем пол для товаров -->
+    <changeSet id="data-3" author="Demyan Zverev">
+        <!-- Платья (женские) -->
+        <insert tableName="item_sex">
+            <column name="item_id" value="1"/>
+            <column name="sex" value="женский"/>
+        </insert>
+        <insert tableName="item_sex">
+            <column name="item_id" value="2"/>
+            <column name="sex" value="женский"/>
+        </insert>
+
+        <!-- Футболки (мужские и унисекс) -->
+        <insert tableName="item_sex">
+            <column name="item_id" value="3"/>
+            <column name="sex" value="мужской"/>
+        </insert>
+        <insert tableName="item_sex">
+            <column name="item_id" value="4"/>
+            <column name="sex" value="унисекс"/>
+        </insert>
+
+        <!-- Джинсы (унисекс) -->
+        <insert tableName="item_sex">
+            <column name="item_id" value="5"/>
+            <column name="sex" value="унисекс"/>
+        </insert>
+    </changeSet>
+
+    <!-- Добавляем изображения товаров -->
+    <changeSet id="data-4" author="Demyan Zverev">
+        <!-- Платья -->
+        <insert tableName="product_images">
+            <column name="item_id" value="1"/>
+            <column name="pic_link" value="https://example.com/dress1.jpg"/>
+        </insert>
+        <insert tableName="product_images">
+            <column name="item_id" value="2"/>
+            <column name="pic_link" value="https://example.com/dress2.jpg"/>
+        </insert>
+
+        <!-- Футболки -->
+        <insert tableName="product_images">
+            <column name="item_id" value="3"/>
+            <column name="pic_link" value="https://example.com/tshirt1.jpg"/>
+        </insert>
+        <insert tableName="product_images">
+            <column name="item_id" value="4"/>
+            <column name="pic_link" value="https://example.com/tshirt2.jpg"/>
+        </insert>
+
+        <!-- Джинсы -->
+        <insert tableName="product_images">
+            <column name="item_id" value="5"/>
+            <column name="pic_link" value="https://example.com/jeans1.jpg"/>
+        </insert>
+    </changeSet>
+
+    <!-- Добавляем ссылки на товары -->
+    <changeSet id="data-5" author="Demyan Zverev">
+        <!-- Платья -->
+        <insert tableName="product_links">
+            <column name="item_id" value="1"/>
+            <column name="product_link" value="https://lamoda.ru/dress1"/>
+        </insert>
+        <insert tableName="product_links">
+            <column name="item_id" value="2"/>
+            <column name="product_link" value="https://lamoda.ru/dress2"/>
+        </insert>
+
+        <!-- Футболки -->
+        <insert tableName="product_links">
+            <column name="item_id" value="3"/>
+            <column name="product_link" value="https://lamoda.ru/tshirt1"/>
+        </insert>
+        <insert tableName="product_links">
+            <column name="item_id" value="4"/>
+            <column name="product_link" value="https://lamoda.ru/tshirt2"/>
+        </insert>
+
+        <!-- Джинсы -->
+        <insert tableName="product_links">
+            <column name="item_id" value="5"/>
+            <column name="product_link" value="https://lamoda.ru/jeans1"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

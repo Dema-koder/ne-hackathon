@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <!-- Создание таблицы categories -->
+    <changeSet id="1" author="Demyan Zverev">
+        <createTable tableName="categories">
+            <column name="id" type="SERIAL" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Создание таблицы items -->
+    <changeSet id="2" author="Demyan Zverev">
+        <createTable tableName="items">
+            <column name="id" type="SERIAL" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="category_id" type="INT">
+                <constraints nullable="false" foreignKeyName="fk_item_category"
+                             referencedTableName="categories" referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Создание таблицы item_sex (связь многие-ко-многим) -->
+    <changeSet id="3" author="Demyan Zverev">
+        <createTable tableName="item_sex">
+            <column name="item_id" type="INT">
+                <constraints nullable="false" foreignKeyName="fk_item_sex_item"
+                             referencedTableName="items" referencedColumnNames="id"/>
+            </column>
+            <column name="sex" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="item_sex" columnNames="item_id, sex"/>
+    </changeSet>
+
+    <!-- Создание таблицы product_images -->
+    <changeSet id="4" author="Demyan Zverev">
+        <createTable tableName="product_images">
+            <column name="id" type="SERIAL" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="item_id" type="INT">
+                <constraints nullable="false" foreignKeyName="fk_image_item"
+                             referencedTableName="items" referencedColumnNames="id"/>
+            </column>
+            <column name="pic_link" type="VARCHAR(1000)"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Создание таблицы product_links -->
+    <changeSet id="5" author="Demyan Zverev">
+        <createTable tableName="product_links">
+            <column name="id" type="SERIAL" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="item_id" type="INT">
+                <constraints nullable="false" foreignKeyName="fk_link_item"
+                             referencedTableName="items" referencedColumnNames="id"/>
+            </column>
+            <column name="product_link" type="VARCHAR(1000)"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

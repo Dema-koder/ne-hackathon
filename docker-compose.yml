@@ -3,20 +3,31 @@ version: '3.8'
 services:
   postgres:
     image: postgres:15
-    container_name: postgres_hackathon
+    container_name: postgres
     environment:
       POSTGRES_USER: app_user
       POSTGRES_PASSWORD: secretpass
       POSTGRES_DB: app_db
     ports:
-      - "5434:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - "5436:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U app_user -d app_db"]
       interval: 5s
       timeout: 5s
       retries: 5
 
-volumes:
-  postgres_data:
+  app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ne_hackathon_app
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/app_db
+      SPRING_DATASOURCE_USERNAME: app_user
+      SPRING_DATASOURCE_PASSWORD: secretpass
+      SPRING_JPA_HIBERNATE_DDL-AUTO: update
+    ports:
+      - "8080:8080"
+    restart: unless-stopped

@@ -1,0 +1,45 @@
+[
+  {
+    "name": "Платья",
+    "items": [
+      {
+        "id": 101,
+        "image": {
+          "id": 1001,
+          "picLink": "https://example.com/dress1.jpg"
+        },
+        "link": {
+          "id": 2001,
+          "productLink": "https://lamoda.ru/dress1"
+        }
+      },
+      {
+        "id": 102,
+        "image": {
+          "id": 1002,
+          "picLink": "https://example.com/dress2.jpg"
+        },
+        "link": {
+          "id": 2002,
+          "productLink": "https://lamoda.ru/dress2"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Футболки",
+    "items": [
+      {
+        "id": 201,
+        "image": {
+          "id": 1003,
+          "picLink": "https://example.com/tshirt1.jpg"
+        },
+        "link": {
+          "id": 2003,
+          "productLink": "https://lamoda.ru/tshirt1"
+        }
+      }
+    ]
+  }
+]
