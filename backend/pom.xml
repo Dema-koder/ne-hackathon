@@ -81,11 +81,6 @@
             <artifactId>spring-boot-starter-web</artifactId>
             <version>3.5.0</version>
         </dependency>
-        <dependency>
-            <groupId>com.dropbox.core</groupId>
-            <artifactId>dropbox-core-sdk</artifactId>
-            <version>4.0.1</version>
-        </dependency>
     </dependencies>
 
     <build>
