@@ -6,4 +6,5 @@
 
     <include file="migrations/init-tables.xml" relativeToChangelogFile="true"/>
     <include file="migrations/fill-tables.xml" relativeToChangelogFile="true"/>
+    <include file="migrations/user-image-table.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
