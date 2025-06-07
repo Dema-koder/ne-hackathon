@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Table(name = "user_images")
+@Table(name = "user_image")
 @Entity
 @Data
 @NoArgsConstructor
@@ -14,6 +14,5 @@ public class UserImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Lob
     private byte[] imageData;
 }
