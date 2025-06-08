@@ -20,6 +20,8 @@ public class Category {
     @Column(nullable = false, length = 100)
     private String name;
 
+    private Long order;
+
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Item> items;
 }

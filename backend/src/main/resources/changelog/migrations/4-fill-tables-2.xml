@@ -1,0 +1,30 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="fill-tables-1" author="Demyan Zverev">
+        <sql>
+            INSERT INTO categories ("name", "order") VALUES
+            ('Платья', 2),
+            ('Футболки', 1),
+            ('Джинсы', 5),
+            ('Сумки', 11),
+            ('Кофты', 4),
+            ('Брюки', 6),
+            ('Шорты', 7),
+            ('Туфли', 8),
+            ('Кроссовки', 9),
+            ('Сапоги', 10);
+            INSERT INTO categories ("name", "order") VALUES
+            ('Рубашки', 3);
+        </sql>
+    </changeSet>
+    <changeSet id="fill-tables-2" author="Demyan Zverev">
+        <sql>
+            INSERT INTO items (category_id) VALUES
+            (4), (4), (4), (1), (5), (2), (1), (6), (6), (3),
+            (7), (8), (8), (9), (10), (9), (11), (5), (2), (2);
+        </sql>
+    </changeSet>
+</databaseChangeLog>

@@ -4,7 +4,10 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
              http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <include file="migrations/init-tables.xml" relativeToChangelogFile="true"/>
+    <include file="migrations/1-init-tables.xml" relativeToChangelogFile="true"/>
     <!--<include file="migrations/fill-tables.xml" relativeToChangelogFile="true"/> -->
-    <include file="migrations/user-image-table.xml" relativeToChangelogFile="true"/>
+    <include file="migrations/2-user-image-table.xml" relativeToChangelogFile="true"/>
+    <include file="migrations/3-update-categories-table.xml" relativeToChangelogFile="true"/>
+    <include file="migrations/4-fill-tables-2.xml" relativeToChangelogFile="true"/>
+    <include file="migrations/5-fill-tables-3.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

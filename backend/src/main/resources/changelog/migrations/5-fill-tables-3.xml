@@ -1,0 +1,84 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="fill-tables-3" author="Demyan Zverev">
+        <sql>
+            INSERT INTO item_sex (item_id,sex) VALUES
+            (1,'женский'),
+            (2,'женский'),
+            (3,'женский'),
+            (4,'женский'),
+            (5,'женский'),
+            (6,'унисекс'),
+            (7,'женский'),
+            (10,'женский'),
+            (12,'женский'),
+            (13,'женский');
+            INSERT INTO item_sex (item_id,sex) VALUES
+            (14,'унисекс'),
+            (15,'женский'),
+            (16,'унисекс'),
+            (8,'унисекс'),
+            (9,'унисекс'),
+            (11,'унисекс'),
+            (17,'мужской'),
+            (18,'мужской'),
+            (19,'мужской'),
+            (20,'мужской');
+        </sql>
+    </changeSet>
+    <changeSet id="fill-tables-4" author="Demyan Zverev">
+        <sql>
+            INSERT INTO product_images (item_id,pic_link) VALUES
+            (4,'https://www.dropbox.com/scl/fi/ijo1b4tzsfyf324z2rlme/1_1.jpg?rlkey=8kz6a6i3rvfqcgrshb78o6t64&amp;st=mw3misav&amp;dl=1'),
+            (5,'https://www.dropbox.com/scl/fi/d80w2c9uztxgz2whk5bgv/2_1.jpg?rlkey=z2xhmv6iv6w2a3kgyxuiwg3bp&amp;st=gptyhjxj&amp;dl=1'),
+            (1,'https://www.dropbox.com/scl/fi/ks1mpj61qml6dhthc9sss/1_1.jpg?rlkey=b4q6c1fggpum61uwlpesyxiod&amp;st=4ek1n2xf&amp;dl=1'),
+            (2,'https://www.dropbox.com/scl/fi/s88z3s2bkzxrkwdax8g11/2_1.jpg?rlkey=aq34ovhuwzrzxhxtf0pjsorg2&amp;st=iqk2qlqx&amp;dl=1'),
+            (3,'https://www.dropbox.com/scl/fi/hazn76wwenaedspa6pyxp/3_1.jpg?rlkey=lmzdirg6w4e2lq8479f46m0hi&amp;st=xnkm545e&amp;dl=1'),
+            (6,'https://www.dropbox.com/scl/fi/cjecdk02npzi291k273yg/3_1.jpg?rlkey=xa5iyzv3bifsh3mih5ga43d18&amp;st=1a2wmqet&amp;dl=1'),
+            (7,'https://www.dropbox.com/scl/fi/j6d3ufew91osxiqtemgxh/4.jpg?rlkey=mkgzn9i9y7fi9zctazbsfj2j0&amp;st=xyhsyj5a&amp;dl=1'),
+            (9,'https://www.dropbox.com/scl/fi/v1cyzufo67i5p70uh8ddt/2_1.jpg?rlkey=au3a98wkpd701fyuix5iri9lr&amp;st=ubn111oc&amp;dl=1'),
+            (10,'https://www.dropbox.com/scl/fi/wa68ibn9dqlvs3re6xltu/3_1.jpg?rlkey=epmu7084enn0yaa1atecl9uwr&amp;st=2da9iipj&amp;dl=1'),
+            (11,'https://www.dropbox.com/scl/fi/a9a4bzkug592yscg0oly8/4_1.jpg?rlkey=jsh59acqio59yjmjksgowrbbf&amp;st=sapifjse&amp;dl=1');
+            INSERT INTO product_images (item_id,pic_link) VALUES
+            (12,'https://www.dropbox.com/scl/fi/lmh1b82lyaxt3uxsuo8xg/1_3.jpg?rlkey=roojbd3mtb1r7v1cq4keqyt9e&amp;st=nwcn9igm&amp;dl=1'),
+            (13,'https://www.dropbox.com/scl/fi/9fcx962xtqrbule7s4ir4/2_2.jpg?rlkey=1mkq49lziqhcg9jiodvq85cmi&amp;st=bzyfmjxw&amp;dl=1'),
+            (14,'https://www.dropbox.com/scl/fi/5nlfs31aaos5iwjc5pfgh/3_3.jpg?rlkey=scdfdp024e2xivv1d5jjd8by0&amp;st=4la5hruc&amp;dl=1'),
+            (15,'https://www.dropbox.com/scl/fi/9vscg7hkifk9nc3dzg3th/4_2.jpg?rlkey=5koifgl2k7s26x00n25e77xnz&amp;st=hw2k2nay&amp;dl=1'),
+            (16,'https://www.dropbox.com/scl/fi/n66maamxxsmzdzqcplcfs/5_3.jpg?rlkey=n38qhzj6de1qq1xd62o5a9rsv&amp;st=xge7b34e&amp;dl=1'),
+            (8,'https://www.dropbox.com/scl/fi/5gkc8b6tph5ml4y0d5d3a/6.jpg?rlkey=8iicazgrl3iljal2qu7e1daw1&amp;st=49740u9e&amp;dl=1'),
+            (17,'https://www.dropbox.com/scl/fi/qttov7i6g38v65ygtohpk/3dPhoto.jpeg?rlkey=5y4qjhy3o6eft2qxlt0mm66u5&amp;st=ytvb7r2b&amp;dl=1'),
+            (18,'https://www.dropbox.com/scl/fi/z4xks772259mbachvfmnd/photo_2025-06-08-09.39.02.jpeg?rlkey=at8lspqgfd85utu5hchy1mzo0&amp;st=4b3zvu0o&amp;dl=1'),
+            (19,'https://www.dropbox.com/scl/fi/yointmexh1uso0fucesbz/photo_2025-06-08-09.39.27.jpeg?rlkey=tbl3rcupot0ra6gm3xragi3vz&amp;st=kujkjpin&amp;dl=1'),
+            (20,'https://www.dropbox.com/scl/fi/wtgwx5rqww5ss690p4mwt/photo_2025-06-08-09.39.31.jpeg?rlkey=7rnyf2or9hkpdul4hrge9esbe&amp;st=42d9puph&amp;dl=1');
+        </sql>
+    </changeSet>
+    <changeSet id="fill-tables-5" author="Demyan Zverev">
+        <sql>
+            INSERT INTO product_links (item_id,product_link) VALUES
+            (1,'https://www.lamoda.ru/p/mp002xw1j5tc/clothes-sela-futbolka/'),
+            (2,'https://www.lamoda.ru/p/mp002xw1j5tc/clothes-sela-futbolka/'),
+            (3,'https://www.lamoda.ru/p/mp002xw1j5tc/clothes-sela-futbolka/'),
+            (4,'https://www.lamoda.ru/p/mp002xw1j5tc/clothes-sela-futbolka/'),
+            (5,'https://www.lamoda.ru/p/mp002xw1j5tc/clothes-sela-futbolka/'),
+            (6,'https://www.lamoda.ru/p/mp002xw1j5tc/clothes-sela-futbolka/'),
+            (7,'https://www.lamoda.ru/p/mp002xw1j5tc/clothes-sela-futbolka/'),
+            (8,'https://www.lamoda.ru/p/mp002xw1j5tc/clothes-sela-futbolka/'),
+            (9,'https://www.lamoda.ru/p/mp002xw1j5tc/clothes-sela-futbolka/'),
+            (10,'https://www.lamoda.ru/p/mp002xw1j5tc/clothes-sela-futbolka/');
+            INSERT INTO product_links (item_id,product_link) VALUES
+            (11,'https://www.lamoda.ru/p/mp002xw1j5tc/clothes-sela-futbolka/'),
+            (12,'https://www.lamoda.ru/p/mp002xw1j5tc/clothes-sela-futbolka/'),
+            (13,'https://www.lamoda.ru/p/mp002xw1j5tc/clothes-sela-futbolka/'),
+            (14,'https://www.lamoda.ru/p/mp002xw1j5tc/clothes-sela-futbolka/'),
+            (15,'https://www.lamoda.ru/p/mp002xw1j5tc/clothes-sela-futbolka/'),
+            (16,'https://www.lamoda.ru/p/mp002xw1j5tc/clothes-sela-futbolka/'),
+            (17,'https://www.lamoda.ru/p/mp002xw1j5tc/clothes-sela-futbolka/'),
+            (18,'https://www.lamoda.ru/p/mp002xw1j5tc/clothes-sela-futbolka/'),
+            (19,'https://www.lamoda.ru/p/mp002xw1j5tc/clothes-sela-futbolka/'),
+            (20,'https://www.lamoda.ru/p/mp002xw1j5tc/clothes-sela-futbolka/');
+        </sql>
+    </changeSet>
+</databaseChangeLog>
