@@ -1,5 +1,7 @@
 package ru.demyan.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.netty.channel.ChannelOption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -82,14 +84,37 @@ public class FittingController {
             requestBody.put("category", category);
             requestBody.put("seed", 4652);
 
-            return webClient.post()
+            var respons = webClient.post()
                     .contentType(MediaType.APPLICATION_JSON)
                     .bodyValue(requestBody)
                     .retrieve()
                     .onStatus(status -> status.isError(), response ->
                             response.bodyToMono(String.class)
                                     .map(body -> new RuntimeException("Remote error: " + body)))
-                    .bodyToMono(byte[].class);
+                    .bodyToMono(String.class) // Получаем как строку (JSON)
+                    .flatMap(json -> {
+                        try {
+                            // Парсим JSON
+                            ObjectMapper mapper = new ObjectMapper();
+                            JsonNode root = mapper.readTree(json);
+
+                            // Извлекаем base64 строку с картинкой
+                            String base64Image = root.path("image").path("image_base64").asText();
+
+                            // Удаляем возможный префикс (если есть)
+                            if (base64Image.contains(",")) {
+                                base64Image = base64Image.split(",")[1];
+                            }
+
+                            // Декодируем base64 в массив байт
+                            byte[] imageBytes = Base64.getDecoder().decode(base64Image);
+                            return Mono.just(imageBytes);
+                        } catch (Exception e) {
+                            return Mono.error(new RuntimeException("Failed to parse image from JSON", e));
+                        }
+                    });
+
+            return respons;
 
         } catch (IOException e) {
             return Mono.error(new RuntimeException("Failed to process images", e));
