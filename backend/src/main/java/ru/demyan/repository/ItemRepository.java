@@ -12,4 +12,7 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query("select i from Item i where i.id in :ids")
     List<Item> findItemByIds(@Param("ids") List<Long> ids);
+
+    @Query("select i.category from Item i where i.id in :id")
+    Long findCategoryIfById(Long id);
 }

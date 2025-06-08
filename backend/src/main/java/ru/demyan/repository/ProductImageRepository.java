@@ -10,4 +10,7 @@ public interface ProductImageRepository extends JpaRepository<ProductImage, Long
     ProductImage getProductImageByItemId(Long itemId);
     @Query("select pi.picLink from ProductImage pi where pi.id = :id")
     String getPicLinkById(Long id);
+
+    @Query("select pi.item from ProductImage pi where pi.id = :id")
+    Long getItemIdById(Long id);
 }
