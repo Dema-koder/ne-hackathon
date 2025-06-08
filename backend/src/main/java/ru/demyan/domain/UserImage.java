@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Table(name = "user_image")
+@Table(name = "user_images")
 @Entity
 @Data
 @NoArgsConstructor

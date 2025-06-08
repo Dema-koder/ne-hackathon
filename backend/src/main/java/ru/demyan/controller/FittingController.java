@@ -1,5 +1,6 @@
 package ru.demyan.controller;
 
+import io.netty.channel.ChannelOption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
@@ -11,11 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+import reactor.util.retry.Retry;
 import ru.demyan.repository.CategoryRepository;
 import ru.demyan.repository.ItemRepository;
 import ru.demyan.repository.ProductImageRepository;
 import ru.demyan.repository.UserImageRepository;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +27,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.time.Duration;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.netty.http.client.HttpClient;
 
 @RestController
 @RequestMapping("/api")
@@ -40,18 +52,63 @@ public class FittingController {
     private final WebClient webClient;
     private final String apiUrl = "http://95.213.247.96:5000/generate";
 
-    public FittingController() {
-        this.webClient = WebClient.create(apiUrl);
+    @Autowired
+    public FittingController(WebClient webClient) {
+        this.webClient = webClient.mutate()
+                .baseUrl(apiUrl)
+                .build();
     }
 
     @GetMapping("/fitting")
-    public Mono<byte[]> fitting(@RequestParam("user-image-id") Long userImageId,
-                                @RequestParam("product-image-id") Long productImageId) throws IOException {
-        byte[] userImage = userImageRepository.getImageDataById(userImageId);
-        String productLink = productImageRepository.getPicLinkById(productImageId);
-        String downloadUrl = convertToDownloadUrl(productLink);
+    public Mono<byte[]> fitting(
+            @RequestParam("user-image-id") Long userImageId,
+            @RequestParam("product-image-id") Long productImageId) {
 
-        HttpURLConnection connection = (HttpURLConnection) new URL(downloadUrl).openConnection();
+        try {
+            // 1. Получаем и конвертируем изображение пользователя в JPEG
+            byte[] userImageJpeg = convertToJpeg(userImageRepository.getImageDataById(userImageId));
+
+            // 2. Получаем и конвертируем товарное изображение в JPEG
+            String productLink = convertToDownloadUrl(productImageRepository.getPicLinkById(productImageId));
+            byte[] productImageJpeg = downloadAndConvertToJpeg(productLink);
+
+            // 3. Определяем категорию
+            int category = determineCategory(productImageId);
+
+            // 4. Подготавливаем запрос
+            Map<String, Object> requestBody = new HashMap<>();
+            requestBody.put("model_image", Base64.getEncoder().encodeToString(userImageJpeg));
+            requestBody.put("cloth_image", Base64.getEncoder().encodeToString(productImageJpeg));
+            requestBody.put("category", category);
+            requestBody.put("seed", 4652);
+
+            return webClient.post()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .bodyValue(requestBody)
+                    .retrieve()
+                    .onStatus(status -> status.isError(), response ->
+                            response.bodyToMono(String.class)
+                                    .map(body -> new RuntimeException("Remote error: " + body)))
+                    .bodyToMono(byte[].class);
+
+        } catch (IOException e) {
+            return Mono.error(new RuntimeException("Failed to process images", e));
+        }
+    }
+
+    private byte[] convertToJpeg(byte[] imageData) throws IOException {
+        BufferedImage image = ImageIO.read(new java.io.ByteArrayInputStream(imageData));
+        if (image == null) {
+            throw new IOException("Invalid image data");
+        }
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(image, "jpg", baos);
+        return baos.toByteArray();
+    }
+
+    private byte[] downloadAndConvertToJpeg(String imageUrl) throws IOException {
+        HttpURLConnection connection = (HttpURLConnection) new URL(imageUrl).openConnection();
         connection.setRequestMethod("GET");
 
         try (InputStream in = connection.getInputStream();
@@ -64,38 +121,15 @@ public class FittingController {
                 buffer.write(tmp, 0, n);
             }
 
-            byte[] imageBytes = buffer.toByteArray();
-            MultipartBodyBuilder builder = new MultipartBodyBuilder();
-
-            builder.part("cloth_image", new ByteArrayResource(imageBytes))
-                    .filename("cloth.jpg")
-                    .contentType(MediaType.IMAGE_JPEG);
-
-            builder.part("model_image", new ByteArrayResource(userImage))
-                    .filename("model.jpg")
-                    .contentType(MediaType.IMAGE_JPEG);
-
-            int category;
-            Long xx = (itemRepository.findCategoryIfById(productImageRepository.getItemIdById(productImageId)));
-            if (xx == 1)
-                category = 2;
-            else
-            if (xx == 2 || xx == 5)
-                category = 0;
-            else
-                category = 1;
-
-            builder.part("category", category);
-
-            return webClient.post()
-                    .uri(apiUrl)
-                    .contentType(MediaType.MULTIPART_FORM_DATA)
-                    .bodyValue(builder.build())
-                    .retrieve()
-                    .bodyToMono(byte[].class);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            return buffer.toByteArray();
         }
+    }
+
+    private int determineCategory(Long productImageId) {
+        Long categoryId = productImageRepository.findCategoryIdByImageId(productImageId);
+        if (categoryId == 1) return 2;
+        if (categoryId == 2 || categoryId == 5) return 0;
+        return 1;
     }
 
     private String convertToDownloadUrl(String url) {
