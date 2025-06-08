@@ -153,7 +153,7 @@ public class FittingController {
     private int determineCategory(Long productImageId) {
         Long categoryId = productImageRepository.findCategoryIdByImageId(productImageId);
         if (categoryId == 1) return 2;
-        if (categoryId == 2 || categoryId == 5) return 0;
+        if (categoryId == 2 || categoryId == 5 || categoryId == 11) return 0;
         return 1;
     }
 
